@@ -56,12 +56,16 @@ LIBRARY=1
 # Source files
 # List C/C++/Assembly source files:
 PRJSRC=src/timers-atmega168.c \
-	   src/timers-atmega168p.c
+	   src/timers-atmega168p.c \
+	   src/assert_helpers.c \
+	   src/sim_debug.c
 
 # Header files
 # List all headers of the project. They will be installed in the case of a lib.
 PRJHEADERS=src/timers-atmega168.h \
 		   src/timers-atmega168p.h \
+		   src/assert_helpers.h \
+		   src/sim_debug.h
 
 
 # additional includes and libs to link in are defined in paths.def
@@ -111,7 +115,10 @@ SIM_TRACES=
 ####################################################
 
 #### Macro definitions
-DEFS=-DF_CPU=$(MCU_FREQ) -DSIM_WRITE=$(SIM_WRITE_ADDR) -DSIM_READ=$(SIM_READ_ADDR) -DSIM_EXIT=$(SIM_EXIT_ADDR)
+DEFS=-DF_CPU=$(MCU_FREQ) \
+	 -DSIM_WRITE="(*((volatile char *) $(SIM_WRITE_ADDR)))" \
+	 -DSIM_READ="(*((volatile char *) $(SIM_READ_ADDR)))" \
+	 -DSIM_EXIT="(*((volatile char *) $(SIM_EXIT_ADDR)))"
 
 #### Simulation
 ifndef SIM_DIR
