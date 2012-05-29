@@ -48,6 +48,7 @@ for I/O in you AVR C code (using avr-libc), like this:
 
 ``` c
     #include <stdio.h>
+    #include <avr-utils/sim_debug.h>
     stdout = stdin = fdevopen(debug_putc, debug_getc);
 ```
 
@@ -57,4 +58,20 @@ After opening, you can just use "printf" as you *always have been comfortable wi
     printf("Yippie, debugging!\n");
 ```
 
+Helper functions to facilitate configuring AVR on-chip peripherals
+------------------------------------------------------------------
+Most AVR microcontrollers have some very common and straightforward on-chip peripherals. Some examples:
+
+ * Timers: 8-bit timers, 16-bit timers, etc.
+ * Analog-to-digital converters.
+ * Analog Comparators.
+
+And for each of these peripheral, a huge amount of pulls and levers are available to help users setup the
+peripherals the way they want. The way this configuration is done is by reading and writing to IO registers
+with cryptic names, and using cryptic bit flags in the process. Wouldn't it be a bit nicer if we could have at
+least SOME functions to help achieve configurations which are VERY commom?
+
+That's what, for example, the functions in timers-atmega168{,p}.{c,h} provide. They have helper functions (for
+example `getTimer0PrescaleBits\_atmega168`) so that you don't have to always keep an eye on your code and
+other on the datasheet...
 
