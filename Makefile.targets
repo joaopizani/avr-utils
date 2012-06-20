@@ -11,7 +11,8 @@
 DEFS=-DF_CPU=$(MCU_FREQ) \
 	 -DSIM_WRITE="(*((volatile char *) $(SIM_WRITE_ADDR)))" \
 	 -DSIM_READ="(*((volatile char *) $(SIM_READ_ADDR)))" \
-	 -DSIM_EXIT="(*((volatile char *) $(SIM_EXIT_ADDR)))"
+	 -DSIM_EXIT="(*((volatile char *) $(SIM_EXIT_ADDR)))" \
+	 $(EXT_DEFS)
 
 
 ##### Simulation definitions
